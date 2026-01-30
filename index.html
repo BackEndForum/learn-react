@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      class Car {
+        constructor(name) {
+          this.brand = name;
+        }
+        mustafa() {
+          return `your name is ${this.brand}`;
+        }
+      }
+      class Age extends Car {
+        constructor(name, age) {
+          super(name);
+          this.Lage = age;
+        }
+        show() {
+          return `${this.mustafa()} and your age is ${this.Lage}`;
+        }
+      }
+      const textCar = new Car(`ali`);
+      const AgeCar = new Age("ali Musa", 23);
+      console.log(AgeCar.show());
+      console.log(textCar.mustafa());
+    </script>
+  </body>
+</html>
