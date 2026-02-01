@@ -1,182 +1,122 @@
-<!-- ========== Start React Props ========== -->
+<!-- ========== Start Arrow Functions ========== -->
 <!--
-Props are arguments passed into React components.
-
-Props are passed to components via HTML attributes.
-
-props stands for properties.
-
-
-##### React Props #####
-
-React Props are like function arguments in JavaScript and attributes in HTML.
-
-To send props into a component, use the same syntax as HTML attributes:
-
-## Example:
-
-Add a brand attribute to the Car element:
-
-createRoot(document.getElementById('root')).render(
-  <Car brand="Ford" />
-);
-
-The component receives the argument as a props object:
-
-## Example:
-
-Use the brand attribute in the Car component:
-
-function Car(props) {
-  return (
-    <h2>I am a {props.brand}!</h2>
-  );
-}
-
-The name of the object is props, but you can call it anything you want.
-
-## Example:
-
-You can use myobj instead of props in the component:
-
-function Car(myobj) {
-  return (
-    <h2>I am a {myobj.brand}!</h2>
-  );
-}
-
-###nPass Multiple Properties ###
-You can send as many properties as you want.
-
-Every attribute is sent to the Car component as object properties.
-
-## Example:
-Send multiple properties to the Car component:
-
-createRoot(document.getElementById('root')).render(
-  <Car brand="Ford" model="Mustang" color="red" />
-);
-
-All properties are received in the Car component inside the props object:
+##### Arrow Functions
+Arrow functions allow us to write shorter function syntax:
 
 ## Example
-Use the property values in the Car component:
 
-function Car(props) {
-  return (
-    <h2>I am a {props.color} {props.brand} {props.model}!</h2>
-  );
+Before:
+
+hello = function() {
+  return "Hello World!";
 }
 
-### Different Data Types ###
-React props can be of any data type, including variables, numbers, strings, objects, arrays, and more.
+## Example
+With Arrow Function:
 
-Strings can be sent inside quotes as in the examples above, but numbers, variables, and objects need to be sent inside curly brackets.
+hello = () => {
+  return "Hello World!";
+}
+
+It gets shorter! If the function has only one statement, and the statement returns a value, you can remove the brackets and the return keyword:
+
+## Example
+Arrow Functions Return Value by Default:
+
+hello = () => "Hello World!";
+
+### Note: This works only if the function has only one statement.
+
+If you have parameters, you pass them inside the parentheses:
+
+## Example
+Arrow Function With Parameters:
+
+hello = (val) => "Hello " + val;
+
+In fact, if you have only one parameter, you can skip the parentheses as well:
 
 Example
-Numbers has to be sent inside curly brackets to be treated as numbers:
+Arrow Function Without Parentheses:
 
-createRoot(document.getElementById('root')).render(
-  <Car year={1969} />
-);
+hello = val => "Hello " + val;
 
-## Example:
-Variables has to be sent inside curly brackets:
+#### What About *this*?
 
-let x = "Ford";
+The handling of *this* is also different in arrow functions compared to regular functions.
 
-createRoot(document.getElementById('root')).render(
-  <Car brand={x} />
-);
+In short, with arrow functions there is no binding of *this*.
 
-## Example:
-Objects and Arrays has to be sent inside curly brackets:
+In regular functions the *this* keyword represented the object that called the function, which could be the window, the document, a button or whatever.
 
-let x = [1964, 1965, 1966];
-let y = {name: "Ford", model: "Mustang"};
+With arrow functions, the *this* keyword always represents the object that defined the arrow function.
 
-createRoot(document.getElementById('root')).render(
-  <Car years={x} carinfo={y} />
-);
+Let us take a look at two examples to understand the difference.
 
-### Object Props ###
-The component treats objects like objects, and you can use the dot notation to access the properties.
+Both examples call a method twice, first when the page loads, and once again when the user clicks a button.
 
-## Example:
-Use the dot notation to access object properties:
+The first example uses a regular function, and the second example uses an arrow function.
 
-function Car(props) {
-  return (
-    <>
-      <h2>My {props.carinfo.name} {props.carinfo.model}!</h2>
-      <p>It is {props.carinfo.color} and it is from {props.carinfo.year}!</p>
-    </>
-  );
+The result shows that the first example returns two different objects (window and button), and the second example returns the Header object twice.
+
+
+## Example
+With a regular function, this represents the object that called the function:
+
+class Header {
+  constructor() {
+    this.color = "Red";
+  }
+
+//Regular function:
+  changeColor = function() {
+    document.getElementById("demo").innerHTML += this;
+  }
 }
 
-const carInfo = {
-  name: "Ford",
-  model: "Mustang",
-  color: "red",
-  year: 1969
-};
+const myheader = new Header();
 
-createRoot(document.getElementById('root')).render(
-  <Car carinfo={carInfo} />
-);
+//The window object calls the function:
+window.addEventListener("load", myheader.changeColor);
 
-### Array Props ###
-Array props can be accessed using the indexes.
+//A button object calls the function:
+document.getElementById("btn").addEventListener("click", myheader.changeColor);
 
-## Example:
-Use the indexes to access array properties:
 
-function Car(props) {
-  return (
-    <h2>My car is a {props.carinfo[0]} {props.carinfo[1]}!</h2>
-                                OR
-    <p>{props.carinfo.map((el, i) => <span key={i}>My car is a {el}</span>)}</p>
-  );
+## Example
+With an arrow function, this represents the Header object no matter who called the function:
+
+class Header {
+  constructor() {
+    this.color = "Red";
+  }
+
+//Arrow function:
+  changeColor = () => {
+    document.getElementById("demo").innerHTML += this;
+  }
 }
 
-const carInfo = ["Ford", "Mustang"];
+const myheader = new Header();
 
-createRoot(document.getElementById('root')).render(
-  <Car carinfo={carInfo} />
-);
 
-#### Pass Props from Component to Component ####
-Attributes are also how you pass data from one component to another, as parameters.
+//The window object calls the function:
+window.addEventListener("load", myheader.changeColor);
 
-## Example:
-Send the brand attribute from the Garage component to the Car component:
+//A button object calls the function:
+document.getElementById("btn").addEventListener("click", myheader.changeColor);
 
-function Car(props) {
-  return (
-    <h2>I am a {props.brand}!</h2>
-  );
-}
+Remember these differences when you are working with functions. Sometimes the behavior of regular functions is what you want, if not, use arrow functions.
 
-function Garage() {
-  return (
-    <>
-      <h1>Who lives in my garage?</h1>
-      <Car brand="Ford" />
-    </>
-  );
-}
 
-createRoot(document.getElementById('root')).render(
-  <Garage />
-);
-## Note: React Props are read-only! You will get an error if you try to change their value.
 -->
-<!-- ========== End React Props ========== -->
+<!-- ========== End Arrow Functions ========== -->
 
 <!doctype html>
 <html lang="en">
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script></script>
   </body>
 </html>

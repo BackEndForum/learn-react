@@ -1,8 +1,9 @@
 import { createRoot } from "react-dom/client";
-import Lass from "./Car.jsx";
+import App from "./App";
+
 
 createRoot(document.getElementById("root")).render(
     <>
-    <Lass />
+    <App />
     </>
 );
