@@ -1,276 +1,87 @@
-<!-- ========== Start JavaScript Array map() ========== -->
+<!-- ========== Start Spread Operator ========== -->
 <!--
-## Destructuring in React
+### Spread Operator
 
-Destructuring is a JavaScript feature that allows you to extract values from objects or arrays into distinct variables. In React, it's commonly used with props, hooks, and state management.
+The JavaScript spread operator (...) allows us to quickly copy all or part of an existing array or object into another array or object.
+## Example
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-## Note: Destructuring makes React code cleaner and more readable by reducing repetitive object and array access.
+const numbersOne = [1, 2, 3];
+const numbersTwo = [4, 5, 6];
 
-#### Destructing Arrays
-Here is the old way of assigning array items to a variable:
+const numbersCombined = [...numbersOne, ...numbersTwo];
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+The spread operator is often used in combination with destructuring.
 
 ## Example
 
-# Before:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const vehicles = ['mustang', 'f-150', 'expedition'];
-
-// old way
-const car = vehicles[0];
-const truck = vehicles[1];
-const suv = vehicles[2];
-
-//You can now access each variable separately:
-document.getElementById('demo').innerHTML = truck;
+Assign the first and second items from numbers to variables and put the rest in an array:
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+const numbers = [1, 2, 3, 4, 5, 6];
+const [one, two, ...rest] = numbers;
+
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-Here is the new way of assigning array items to a variable:
+We can use the spread operator with objects too:
 
 ## Example
 
-With destructuring:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const vehicles = ['mustang', 'f-150', 'expedition'];
-
-const [car, truck, suv] = vehicles;
-
-//You can now access each variable separately:
-document.getElementById('demo').innerHTML = truck;
+Combine these two objects:
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# When destructuring arrays, the order that variables are declared is important.
-
-If we only want the car and suv we can simply leave out the truck but keep the comma:
-
-const vehicles = ['mustang', 'f-150', 'expedition'];
-
-const [car,, suv] = vehicles;
-Destructuring comes in handy when a function returns an array:
-
-## Example
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-function dateInfo(dat) {
-  const d = dat.getDate();
-  const m = dat.getMonth() + 1;
-  const y = dat.getFullYear();
-
-  return [d, m, y];
-}
-
-const [date, month, year] = dateInfo(new Date());
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-### Destructuring Objects
-
-You can use destructuring to extract the values from an object:
-
-## Example
-
-Unpack the values from an object:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const person = {
-  firstName: "John",
-  lastName: "Doe",
-  age: 50
-};
-
-// Destructuring
-let {firstName, lastName, age} = person;
-
-//You can now access each variable separately:
-document.getElementById("demo").innerHTML = firstName;
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-For objects, the order of the properties does not matter:
-
-# Example
-
-Unpack the values in a random order:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const person = {
-  firstName: "John",
-  lastName: "Doe",
-  age: 50
-};
-
-// Destructuring
-let {lastName, age, firstName} = person;
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-You can extract only the value(s) you want:
-
-## Example
-
-Extract only firstName from the object:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const person = {
-  firstName: "John",
-  lastName: "Doe",
-  age: 50
-};
-
-// Destructuring
-let {firstName} = person;
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-For potentially missing properties we can set default values:
-
-## Example
-
-Set a default value for the missing property:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const person = {
-  firstName: "John",
-  lastName: "Doe",
-  age: 50
-};
-
-// Destructuring
-let {firstName, lastName, age, country = "Norway"} = person;
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-We can also destructure deeply nested objects by referencing the nested object then using a colon and curly braces to again destructure the items needed from the nested object:
-
-## Example
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-const person = {
-  firstName: "John",
-  lastName: "Doe",
-  age: 50,
-  car: {
-    brand: 'Ford',
-    model: 'Mustang',
+const car = {
+  brand: 'Ford',
+  model: 'Mustang',
+  color: 'red'
   }
-};
-
-// Destructuring
-let {firstName, car: { brand, model }} = person;
-
-let message = `My name is ${firstName}, and I drive a ${brand} ${model}.`;
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-### Destructuring in React Components
-
-# Destructuring is particularly useful in React for working with props, hooks, and API responses. It helps make your code more concise and easier to read.
-
-## Props Destructuring
-
-When a component receives props, you can use destructuring to extract the values you need.
-
-Check out the difference between using and not using destructuring:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-//Using destructuring:
-function Greeting({ name, age }) {
-  return <h1>Hello, {name}! You are {age} years old.</h1>;
-}
-//NOT using destructuring:
-function Greeting(props) {
-  return <h1>Hello, {props.name}! You are {props.age} years old.</h1>;
-}
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-Let's see a working example:
-
-## Example
-
-Using destructuring to extract props:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-import { createRoot } from 'react-dom/client'
-
-function Greeting({ name, age }) {
-  return <h1>Hello, {name}! You are {age} years old.</h1>;
-}
   
-createRoot(document.getElementById('root')).render(
-  <Greeting name="John" age={25} />
-);
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-## useState Hook Destructuring
-
-When a component uses the useState hook, we use destructuring to extract the values from it.
-
-## Example
-
-Using destructuring to extract values from useState:
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-import { createRoot, useState } from 'react-dom/client'
-
-function Counter() {
-  // Destructuring the array returned by useState
-  const [count, setCount] = useState(0);
+  const car_more = {
+    type: 'car',
+    year: 2021, 
+  color: 'yellow'
+  }
   
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  );
-}
-
-createRoot(document.getElementById('root')).render(
-  <Counter />
-);
-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= Quiz =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-Complete the React component using destructuring:
-
-function UserProfile(.....user.....) {
-  return (
-    <div>
-      Hello, {user......}!
-      You are {user......} years old.
-    </div>
-  );
-}
+const mycar = {...car, ...car_more}
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-What is the correct way to destructure multiple properties from an object?
+## Notice that the properties that did not match were added, and the property that did match was overwritten by the last object.
 
-1. let name, age = person;
-2. let [name, age] = person;
-3. let {name, age} = person;
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+=-=-=-=-=-=-=-=-=-=-=-=-=-= Quiz =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+Which of the following is the spread operator?
+
+1\ +++
+2\ ...
+3\ ###
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-How do you skip the second element when destructuring an array?
+Use the spread operator to combine the following arrays.
 
-1. const [first skip last] = arr;
-2. const [first...last] = arr;
-3. const [first,,last] = arr;
+1. const arrayOne = ['a', 'b', 'c'];
+2. const arrayTwo = [1, 2, 3];
+3. const arraysCombined = [.........];
 
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-How do you set a default value when destructuring an object?
+const numbers = [1, 2, 3, 4, 5, 6];
+const [one, two, ...x] = numbers;
+What will be the result of x?
 
-1. let {name = 'John'} = person;
-2. let {name || 'John'} = person;
-3. let {name: 'John'} = person;
+1. [3]
+2. [6]
+3. [3,4,5,6]
 -->
-<!-- ========== End JavaScript Array map() ========== -->
+<!-- ========== End Spread Operator ========== -->
 
 <!doctype html>
 <html lang="en">
